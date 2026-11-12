@@ -5,15 +5,15 @@ description: 用固定工程模板开发 miniapp 应用（React + Vite + Node �
 
 # miniapp：应用创作规范
 
-你是 miniapp 预设中的开发 agent。你的产物是**一个符合固定契约的目录**，放在 `appsRoot` 下（用 `miniapp.path()` 工具取绝对路径，不要猜）。展示侧（右栏「应用」列表）会扫描该目录、用同一条命令启动每个应用、并把应用塞进内置浏览器标签页。契约是硬的：**换框架、换后端、换数据库都会让展示侧认不出这个应用**。
+你是 miniapp 预设中的开发 agent。你的产物是**一个符合固定契约的目录**，放在 `appsRoot` 下（用 `miniapp_path()` 工具取绝对路径，不要猜）。展示侧（右栏「应用」列表）会扫描该目录、用同一条命令启动每个应用、并把应用塞进内置浏览器标签页。契约是硬的：**换框架、换后端、换数据库都会让展示侧认不出这个应用**。
 
 ## 1. 先取目录，再开工
 
-调用 `miniapp.path()` 得到 `appsRoot`。一个应用 = `appsRoot/<app-id>/` 一个子目录，`<app-id>` 用小写字母、数字、连字符（例如 `todo-board`）。
+调用 `miniapp_path()` 得到 `appsRoot`。一个应用 = `appsRoot/<app-id>/` 一个子目录，`<app-id>` 用小写字母、数字、连字符（例如 `todo-board`）。
 
 若 `appsRootDefault` 为 `true`，说明用户没有在右栏配置「开发目录」，此时 `appsRoot` 是插件内置的**默认目录**（bundle 安装位置的兄弟目录 `dsh-miniapps`，即 `<bundle 容器>/dsh-miniapps/`；若 bundle 装在 node_modules 里则退回 `~/dsh-miniapps`）。直接用这个默认目录即可，无需提示用户先填配置。
 
-新应用**必须**从随 bundle 出货的模板复制骨架。模板绝对路径由 `miniapp.path()` 一并返回（`template` 字段）。用 shell 复制整个 `template/` 到 `<appsRoot>/<app-id>/`，然后**只改** `src/` 下的文件、`index.html` 的 `<title>`、以及 `miniapp.json` 的描述/图标。不要改 `server.mjs`、`vite.config.mjs`、`package.json` 的 scripts/deps。
+新应用**必须**从随 bundle 出货的模板复制骨架。模板绝对路径由 `miniapp_path()` 一并返回（`template` 字段）。用 shell 复制整个 `template/` 到 `<appsRoot>/<app-id>/`，然后**只改** `src/` 下的文件、`index.html` 的 `<title>`、以及 `miniapp.json` 的描述/图标。不要改 `server.mjs`、`vite.config.mjs`、`package.json` 的 scripts/deps。
 
 复制后必须安装依赖一次（模板依赖需要联网）：
 ```

@@ -1,5 +1,5 @@
 # miniapp bundle — one loadable unit:
-#   * a Host row (process supervisor + HTTP API + the miniapp.path() tool)
+#   * a Host row (process supervisor + HTTP API + the miniapp_path() tool)
 #   * an agent preset (miniapp) whose skill-filesystem mounts this bundle's skills/
 # The `!!js` expression is evaluated only here, in the bundle patch. It must
 # never be copied into a profile patch by configEditor.edit(): there baseUrl
@@ -23,7 +23,7 @@
               prefix: |
                 You are a coding agent that builds small web applications with the miniapp framework (React + Vite frontend, one Node backend process, SQLite storage).
                 Before creating or editing any app, load the `miniapp` skill and follow its APP_SPEC exactly.
-                Use miniapp.path() to find the apps root and the shipped template directory.
+                Use miniapp_path() to find the apps root and the shipped template directory.
           - id: agent-instructions
             name: '@deepseek-ai/dsh-agent-instructions'
             config:
