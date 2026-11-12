@@ -4,6 +4,11 @@ All notable changes to `@sunqing975/dsh-miniapp` are documented here.
 The version in `package.json` is the single source of truth; bump it on every
 release so the plugin market can detect updates.
 
+## [0.1.2] — 2026-11-12
+
+- Plugin display title changed from `miniapp` to `dsh-miniapp` in the
+  locale meta (the name shown in the plugin manager / settings list).
+
 ## [0.1.1] — 2026-11-12
 
 - Rename the bundle-registered tool from `miniapp.path` to `miniapp_path`.

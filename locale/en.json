@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "miniapp",
+    "title": "dsh-miniapp",
     "description": "An app-authoring preset plus a right-sidebar list that runs and previews the apps you build."
   },
   "tab": {

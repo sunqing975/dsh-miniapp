@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "miniapp",
+    "title": "dsh-miniapp",
     "description": "内置应用创作预设，并在右栏列出、启停和预览你开发的应用。"
   },
   "tab": {
