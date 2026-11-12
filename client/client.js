@@ -37,6 +37,11 @@ window.__ModuleLoader__.load({
       'tab.stop': 'Stop',
       'tab.restart': 'Restart',
       'tab.logs': 'Logs',
+      'tab.delete': 'Delete',
+      'tab.deleteConfirmTitle': 'Delete this app?',
+      'tab.deleteConfirmBody': 'This stops the running process and permanently deletes the entire project folder (including its git history). This cannot be undone.',
+      'tab.deleteConfirmYes': 'Delete',
+      'tab.deleteConfirmNo': 'Cancel',
       'tab.noLogs': 'No output yet.',
       'tab.refresh': 'Refresh',
       'tab.root': 'Apps root',
@@ -61,6 +66,11 @@ window.__ModuleLoader__.load({
       'tab.stop': '停止',
       'tab.restart': '重启',
       'tab.logs': '日志',
+      'tab.delete': '删除',
+      'tab.deleteConfirmTitle': '删除这个应用？',
+      'tab.deleteConfirmBody': '会停止运行中的进程并永久删除整个项目文件夹（包括 git 历史），且不可恢复。',
+      'tab.deleteConfirmYes': '删除',
+      'tab.deleteConfirmNo': '取消',
       'tab.noLogs': '暂无输出。',
       'tab.refresh': '刷新',
       'tab.root': '开发目录',
@@ -135,6 +145,11 @@ window.__ModuleLoader__.load({
 .miniapp-btn{font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-base);color:var(--dsw-alias-label-secondary);white-space:nowrap;transition:background .12s,color .12s,border-color .12s}
 .miniapp-btn:hover:not(:disabled){background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}
 .miniapp-btn:disabled{opacity:.45;cursor:default}
+.miniapp-btn-danger{border-color:var(--dsw-alias-state-business-primary);color:var(--dsw-alias-state-business-primary)}
+.miniapp-btn-danger:hover:not(:disabled){background:var(--dsw-alias-state-business-tertiary);color:var(--dsw-alias-state-business-primary);border-color:var(--dsw-alias-state-business-primary)}
+.miniapp-card-danger{border-color:var(--dsw-alias-state-business-primary)}
+.miniapp-confirm{font-size:12px;color:var(--dsw-alias-label-secondary);line-height:1.5;padding:2px 0}
+.miniapp-confirm-title{font-weight:600;color:var(--dsw-alias-label-primary);margin-bottom:4px}
 .miniapp-input{flex:1 1 auto;min-width:0;font-size:12px;padding:5px 9px;border:1px solid var(--dsw-alias-border-l2);border-radius:6px;background:var(--dsw-alias-bg-base);color:var(--dsw-alias-label-primary)}
 .miniapp-input:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}
 .miniapp-err{font-size:12px;color:var(--dsw-alias-state-business-primary);background:var(--dsw-alias-state-business-tertiary);border-radius:6px;padding:6px 8px;margin:6px 0;word-break:break-word}
@@ -257,9 +272,28 @@ window.__ModuleLoader__.load({
 
         function Row({ app }) {
           const s = useAppState()
+          const [confirming, setConfirming] = useState(false)
           const busy = s.busy.startsWith(app.id + ':')
           const running = app.status === 'running'
           const color = STATE_COLOR[app.status] || STATE_COLOR.stopped
+          if (confirming) {
+            return h('div', { className: 'miniapp-card miniapp-card-danger' },
+              h('div', { className: 'miniapp-main' },
+                h('div', { className: 'miniapp-confirm-title' }, t('tab.deleteConfirmTitle')),
+                h('div', { className: 'miniapp-confirm' }, t('tab.deleteConfirmBody')),
+              ),
+              h('div', { className: 'miniapp-actions' },
+                h('button', {
+                  className: 'miniapp-btn miniapp-btn-danger', disabled: busy,
+                  onClick: () => { setConfirming(false); act('delete', app.id) },
+                }, t('tab.deleteConfirmYes')),
+                h('button', {
+                  className: 'miniapp-btn', disabled: busy,
+                  onClick: () => setConfirming(false),
+                }, t('tab.deleteConfirmNo')),
+              ),
+            )
+          }
           return h('div', { className: 'miniapp-card' },
             h('span', {
               title: app.status, 'aria-hidden': true,
@@ -284,6 +318,10 @@ window.__ModuleLoader__.load({
                 className: 'miniapp-btn', disabled: busy,
                 onClick: () => s.logsFor === app.id ? patch({ logsFor: '', logText: '' }) : act('logs', app.id),
               }, t('tab.logs')),
+              h('button', {
+                className: 'miniapp-btn miniapp-btn-danger', disabled: busy, title: t('tab.delete'),
+                onClick: () => setConfirming(true),
+              }, t('tab.delete')),
             ),
           )
         }
