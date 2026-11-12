@@ -4,6 +4,13 @@ All notable changes to `@sunqing975/dsh-miniapp` are documented here.
 The version in `package.json` is the single source of truth; bump it on every
 release so the plugin market can detect updates.
 
+## [0.1.1] — 2026-11-12
+
+- Rename the bundle-registered tool from `miniapp.path` to `miniapp_path`.
+  A dotted name violates the `^[a-zA-Z0-9_-]+$` tool-name pattern enforced by
+  DeepSeek-compatible chat APIs, which rejected the whole tool catalog with HTTP
+  400. The underscore name is accepted everywhere; behaviour is unchanged.
+
 ## [0.1.0] — 2026-11-12
 
 Initial release. One Cordis bundle that carries everything needed to build and

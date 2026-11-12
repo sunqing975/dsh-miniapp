@@ -1,6 +1,6 @@
 {
   "name": "@sunqing975/dsh-miniapp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Build, run, and preview small React + Node web apps right inside DeepSeek Harness — an agent preset plus a sidebar launcher plugin in one Cordis bundle.",
   "exports": {
